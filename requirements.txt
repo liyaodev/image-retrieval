@@ -1,0 +1,7 @@
+numpy==1.19.5
+keras==2.4.3
+tensorflow==2.4.1
+pillow==8.1.0
+elasticsearch==7.11.0
+pymilvus==0.4.0
+faiss-cpu==1.7.0
