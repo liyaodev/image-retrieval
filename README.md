@@ -14,7 +14,7 @@ docker run -it -d -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" dock
 ```
 
 ### Milvus服务端安装
-安装指南：https://milvus.io/cn/docs/milvus_docker-cpu.md <br>
+安装指南：https://milvus.io/cn/docs/v1.1.1/milvus_docker-cpu.md <br>
 下载配置
 ```
 mkdir -p milvus/conf && cd milvus/conf
