@@ -18,18 +18,18 @@ docker run -it -d -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" dock
 下载配置
 ```
 mkdir -p milvus/conf && cd milvus/conf
-wget https://raw.githubusercontent.com/milvus-io/milvus/0.10.6/core/conf/demo/server_config.yaml
+wget https://raw.githubusercontent.com/milvus-io/milvus/v1.1.1/core/conf/demo/server_config.yaml
 ```
 服务启动
 ```
-docker run -d --name milvus_cpu_0.11.0 \
+docker run -d --name milvus_cpu_1.1.1 \
 -p 19530:19530 \
 -p 19121:19121 \
 -v <ROOT_DIR>/milvus/db:/var/lib/milvus/db \
 -v <ROOT_DIR>/milvus/conf:/var/lib/milvus/conf \
 -v <ROOT_DIR>/milvus/logs:/var/lib/milvus/logs \
 -v <ROOT_DIR>/milvus/wal:/var/lib/milvus/wal \
-milvusdb/milvus:0.10.6-cpu-d022221-64ddc2
+milvusdb/milvus:1.1.1-cpu-d061621-330cc6
 ```
 
 ### 操作简介
