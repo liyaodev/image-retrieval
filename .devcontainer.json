@@ -1,0 +1,12 @@
+{
+    "name": "Image Retrieval Dev Container Definition",
+    "dockerComposeFile": ["./docker-compose-devcontainer.yml"],
+    "service": "image-retrieval",
+    "initializeCommand": "scripts/devcontainer.sh up",
+    "workspaceFolder": "/www/server",
+    "remoteEnv": { },
+    "extensions": [
+      "ms-python.python",
+	    "ms-python.vscode-pylance"
+    ]
+}

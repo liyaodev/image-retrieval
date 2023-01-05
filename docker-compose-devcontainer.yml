@@ -1,0 +1,59 @@
+version: '3.5'
+
+services:
+  image-retrieval:
+    container_name: image-retrieval
+    image: liyaodev/image-retrieval-env:v1.0.0
+    # 本地构建
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 8888:8888
+    environment:
+      ES_HOST: ${ES_HOST}
+      ES_PORT: ${ES_PORT}
+      MILVUS_HOST: ${MILVUS_HOST}
+      MILVUS_PORT: ${MILVUS_PORT}
+    volumes:
+      - .:/www/server:delegated
+      - ${IMAGE_RETRIEVAL_ROOT_DIR:-.}/volumes/vscode-extensions:/www/.vscode-server:delegated
+    depends_on:
+      - es
+      - milvus
+      - milvus-em
+
+  es:
+    container_name: image-retrieval-es
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
+    environment:
+      - discovery.type=single-node
+    ports: 
+      - 9200:9200
+      - 9300:9300
+    volumes:
+      - ${IMAGE_RETRIEVAL_ROOT_DIR:-.}/volumes/es:/usr/share/elasticsearch/data
+
+  milvus:
+    container_name: image-retrieval-milvus
+    image: milvusdb/milvus:1.1.1-cpu-d061621-330cc6
+    ports: 
+      - 19530:19530
+      - 19121:19121
+    volumes:
+      - ${IMAGE_RETRIEVAL_ROOT_DIR:-.}/conf:/var/lib/milvus/conf
+      - ${IMAGE_RETRIEVAL_ROOT_DIR:-.}/volumes/milvus/db:/var/lib/milvus/db
+      - ${IMAGE_RETRIEVAL_ROOT_DIR:-.}/volumes/milvus/logs:/var/lib/milvus/logs
+      - ${IMAGE_RETRIEVAL_ROOT_DIR:-.}/volumes/milvus/wal:/var/lib/milvus/wal
+
+  milvus-em:
+      container_name: image-retrieval-milvus-em
+      image: milvusdb/milvus-em:v0.4.2
+      environment:
+        - API_URL=http://${MILVUS_HOST}:19121
+      ports: 
+        - 3000:80
+
+networks:
+  default:
+    name: image_retrieval_dev
